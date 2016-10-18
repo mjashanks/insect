@@ -15,7 +15,7 @@ namespace Insect.Stores
         byte[] GetPasswordHash(int userid);
 
         void LogEvent(Guid? userid, AuthAuditType type);
-        Guid CreateNewSession(int userId, UserLevel level);
+        Guid CreateNewSession(int userId);
         void SaveUser(User session);
         void CreateUser(User session);
         void SavePasswordHash(int userid, byte[] hashedPassword);

@@ -9,7 +9,7 @@ SecurityQuestion1 varchar(max),
 SecurityQuestion2 varchar(max),
 FailedLoginCount int,
 PasswordExpiryDate datetime null,
-UserLevel int,
+IsAdministrator bit,
 IsLocked bit)
 
 create table InsectTest.dbo.[Sessions]

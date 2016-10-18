@@ -22,7 +22,7 @@ namespace Insect.Tests
                 SecurityAnswer1 = string.Format("{0:dd/MM/yyyy}", new DateTime(1984, 04, 20)),
                 SecurityQuestion2 = "Dogs Name",
                 SecurityAnswer2 = "Bobby",
-                UserLevel = UserLevel.Administrator
+                IsAdministrator = true
             };
         }
 

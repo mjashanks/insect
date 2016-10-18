@@ -12,26 +12,21 @@ namespace Insect.UserCommands
     {
         public TResponse Run(Guid sessionId, TRequest req)
         {
-            var sessionUserLevel = SessionUserLevel(sessionId);
+            var user = SessionUser(sessionId);
 
-            if (!AllowedLevels.Contains(sessionUserLevel))
+            if (!IsAllowed(user, req))
                 throw new Exception("Not Authorized");
 
             return Run(req);
         }
 
-        private UserLevel SessionUserLevel(Guid sessid)
+        private User SessionUser(Guid sessid)
         {
             throw new NotImplementedException();
         }
 
         protected abstract TResponse Run(TRequest req);
 
-        protected abstract UserLevel[] AllowedLevels {get;}
-
-        protected UserLevel[] Allow(params UserLevel[] levels)
-        {
-            return levels;
-        }
+        protected abstract bool IsAllowed(User sessionUser, TRequest req);
     }
 }

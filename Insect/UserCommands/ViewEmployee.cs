@@ -1,4 +1,5 @@
 ﻿using Insect.Domain;
+using Insect.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,14 +10,23 @@ namespace Insect.UserCommands
 {
     public class ViewEmployee : AuthorizedCommandBase<int, Employee>
     {
+        private IEmployeeStore _employeeStore;
+        public ViewEmployee(IEmployeeStore employeeStore)
+        {
+            _employeeStore = employeeStore;
+        }
+
         protected override Employee Run(int req)
         {
             throw new NotImplementedException();
         }
 
-        protected override UserLevel[] AllowedLevels
+        protected override bool IsAllowed(User sessionUser, int employeeId)
         {
-            get { return Allow(UserLevel.Employee, UserLevel.Manager); }
+            return 
+                _employeeStore.IsMe(sessionUser, employeeId)
+                || _employeeStore.IAmManagerOf(sessionUser, employeeId)
+                || (_employeeStore.IAmHr(sessionUser) && !_employeeStore.IsHr(employeeId));
         }
     }
 }

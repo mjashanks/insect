@@ -45,7 +45,7 @@ namespace Insect.Authentication
                 ResetFailedCount(user);
             }
             
-            return _authStore.CreateNewSession(user.Id, user.UserLevel);
+            return _authStore.CreateNewSession(user.Id);
         }
 
         private void IncrementFailCount(User user)

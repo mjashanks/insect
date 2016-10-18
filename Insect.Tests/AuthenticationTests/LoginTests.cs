@@ -28,7 +28,7 @@ namespace Insect.Tests.AuthenticationTests
                       .Returns(hash)
                       .Verifiable();
 
-            _authStore.Setup(a => a.CreateNewSession(user.Id, user.UserLevel))
+            _authStore.Setup(a => a.CreateNewSession(user.Id))
                       .Returns(expectedSessionId)
                       .Verifiable();
 
@@ -54,7 +54,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.GetPasswordHash(It.IsAny<int>()))
                       .Throws(new Exception("should not try and fetch password hash"));
 
-            _authStore.Setup(a => a.CreateNewSession(user.Id, user.UserLevel))
+            _authStore.Setup(a => a.CreateNewSession(user.Id))
                       .Throws(new Exception("should not create session"));
 
             var actualSessionId = _authenticationService.Login(user.Username, password);
@@ -82,7 +82,7 @@ namespace Insect.Tests.AuthenticationTests
                       .Returns(storedHash)
                       .Verifiable();
 
-            _authStore.Setup(a => a.CreateNewSession(user.Id, user.UserLevel))
+            _authStore.Setup(a => a.CreateNewSession(user.Id))
                       .Throws(new Exception("should not create session"));
 
             var actualSessionId = _authenticationService.Login(user.Username, password);
@@ -189,7 +189,7 @@ namespace Insect.Tests.AuthenticationTests
                       .Returns(hash)
                       .Verifiable();
 
-            _authStore.Setup(a => a.CreateNewSession(user.Id, user.UserLevel))
+            _authStore.Setup(a => a.CreateNewSession(user.Id))
                       .Returns(expectedSessionId)
                       .Verifiable();
 

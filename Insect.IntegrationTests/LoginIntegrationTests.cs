@@ -27,7 +27,7 @@ namespace Insect.IntegrationTests
 
             user = new User
             {
-                UserLevel = UserLevel.Administrator,
+                IsAdministrator = true,
                 Username = "mike",
                 Salt = "mmmmSalty",
                 PasswordExpiryDate = DateTime.Now.AddDays(14)

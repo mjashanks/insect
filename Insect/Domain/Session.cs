@@ -13,7 +13,5 @@ namespace Insect.Domain
         public int Id { get; set; }
         public Guid SessionId { get; set; }
         public int UserId { get; set; }
-        public DateTime ExpiryDate { get; set; }
-        public UserLevel Level { get; set;  } // strictly not necessary - but for convenience
-    }
+        public DateTime ExpiryDate { get; set; }}
 }

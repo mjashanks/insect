@@ -10,7 +10,7 @@ namespace Insect.UserCommands
     public class PermissionChange 
     {
         public int UserId {get; set;}
-        public UserLevel NewLevel {get; set;}
+        // todo ... what are 'permissions' 
     }
 
     public class ManagePermission : AuthorizedCommandBase<PermissionChange, bool>
@@ -20,9 +20,9 @@ namespace Insect.UserCommands
             throw new NotImplementedException();
         }
 
-        protected override UserLevel[] AllowedLevels
+        protected override bool IsAllowed(User sessionUser, PermissionChange req)
         {
-            get { return Allow(UserLevel.Administrator); }
+            return sessionUser.IsAdministrator;
         }
     }
 }

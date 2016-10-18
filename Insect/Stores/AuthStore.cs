@@ -48,13 +48,12 @@ namespace Insect.Stores
             throw new NotImplementedException();
         }
 
-        public Guid CreateNewSession(int userId, UserLevel level)
+        public Guid CreateNewSession(int userId)
         {
             var sess = new Session
             {
                 ExpiryDate = DateTime.Now.AddDays(1),
                 SessionId = Guid.NewGuid(),
-                Level = level,
                 UserId = userId
             };
 

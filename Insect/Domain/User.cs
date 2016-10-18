@@ -7,13 +7,6 @@ using System.Threading.Tasks;
 
 namespace Insect.Domain
 {
-    public enum UserLevel
-    {
-        Employee,
-        Manager,
-        Administrator
-    }
-
     public class User
     {
         [Key]
@@ -27,7 +20,7 @@ namespace Insect.Domain
         public string SecurityAnswer2 { get; set; }
         public int FailedLoginCount { get; set; }
         public DateTime PasswordExpiryDate { get; set; }
-        public UserLevel UserLevel { get; set; }
+        public bool IsAdministrator { get; set; }
         public bool IsLocked { get; set; }
     }
 }
