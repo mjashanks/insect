@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nant.Domain
+namespace Insect.Domain
 {
     public class PasswordHash
     {

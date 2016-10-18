@@ -6,8 +6,8 @@
     <ProjectGuid>{3DE3B452-3105-4BF0-B75A-7E82BDF406CA}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Nant.Tests</RootNamespace>
-    <AssemblyName>Nant.Tests</AssemblyName>
+    <RootNamespace>Insect.Tests</RootNamespace>
+    <AssemblyName>Insect.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -61,9 +61,9 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\nant\nant.csproj">
+    <ProjectReference Include="..\Insect\Insect.csproj">
       <Project>{0bbf22cd-cb7f-460f-8108-0115615a6152}</Project>
-      <Name>nant</Name>
+      <Name>Insect</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

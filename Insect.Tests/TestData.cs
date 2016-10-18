@@ -1,8 +1,8 @@
 ﻿using System;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using nant.Domain;
+using Insect.Domain;
 
-namespace Nant.Tests
+namespace Insect.Tests
 {
     public class TestData
     {

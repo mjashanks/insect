@@ -7,8 +7,8 @@
     <ProjectGuid>{0BBF22CD-CB7F-460F-8108-0115615A6152}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>nant</RootNamespace>
-    <AssemblyName>nant</AssemblyName>
+    <RootNamespace>Insect</RootNamespace>
+    <AssemblyName>Insect</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

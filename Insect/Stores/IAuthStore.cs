@@ -1,11 +1,11 @@
-﻿using nant.Domain;
+﻿using Insect.Domain;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nant.Stores
+namespace Insect.Stores
 {
     public interface IAuthStore
     {
@@ -16,6 +16,7 @@ namespace nant.Stores
 
         void LogEvent(Guid? userid, AuthAuditType type);
         Guid CreateNewSession(Guid userId);
-        
+        void SaveUser(User session);
+
     }
 }

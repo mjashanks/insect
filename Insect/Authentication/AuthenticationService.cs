@@ -1,11 +1,12 @@
-﻿using nant.Stores;
+﻿using Insect.Domain;
+using Insect.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nant.Authentication
+namespace Insect.Authentication
 {
     public class AuthenticationService : IAuthenticationService
     {
@@ -25,15 +26,43 @@ namespace nant.Authentication
                 return null;
             }
 
+            if(user.IsLocked)
+            {
+                return null;
+            }
+
             var storedHash = _authStore.GetPasswordHash(user.Id);
             var computedHash = PasswordHasher.GenerateSaltedHash(password, user.Salt);
 
             if(storedHash != computedHash)
             {
+                IncrementFailCount(user);
                 return null;
+            }
+
+            if(user.FailedLoginCount > 0)
+            {
+                ResetFailedCount(user);
             }
             
             return _authStore.CreateNewSession(user.Id);
+        }
+
+        private void IncrementFailCount(User user)
+        {
+            user.FailedLoginCount++;
+            if (user.FailedLoginCount == 3)
+            {
+                user.IsLocked = true;
+            }
+
+            _authStore.SaveUser(user);
+        }
+
+        private void ResetFailedCount(User user)
+        {
+            user.FailedLoginCount = 0;
+            _authStore.SaveUser(user);
         }
 
         public bool Register(UserRegistrationDetails details)

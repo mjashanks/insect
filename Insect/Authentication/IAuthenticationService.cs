@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace nant.Authentication
+namespace Insect.Authentication
 {
     public interface IAuthenticationService
     {
