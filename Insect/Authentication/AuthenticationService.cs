@@ -34,7 +34,7 @@ namespace Insect.Authentication
             var storedHash = _authStore.GetPasswordHash(user.Id);
             var computedHash = PasswordHasher.GenerateSaltedHash(password, user.Salt);
 
-            if(storedHash != computedHash)
+            if(!PasswordHasher.CompareByteArrays(storedHash, computedHash))
             {
                 IncrementFailCount(user);
                 return null;
@@ -45,7 +45,7 @@ namespace Insect.Authentication
                 ResetFailedCount(user);
             }
             
-            return _authStore.CreateNewSession(user.Id);
+            return _authStore.CreateNewSession(user.Id, user.UserLevel);
         }
 
         private void IncrementFailCount(User user)
@@ -67,7 +67,35 @@ namespace Insect.Authentication
 
         public bool Register(UserRegistrationDetails details)
         {
-            throw new NotImplementedException();
+            if (!UserRegistrationDetails.IsValid(details)) 
+                return false;
+
+            var user =_authStore.GetUserByName(details.Username);
+
+            if (user == null)
+                return false;
+
+            MapUser(details, user);
+            user.Salt = PasswordHasher.GenerateSalt();
+
+            _authStore.SaveUser(user);
+
+            var hashedPw = PasswordHasher.GenerateSaltedHash(details.Password, user.Salt);
+            _authStore.SavePasswordHash(user.Id, hashedPw);
+
+            return true;
+
+        }
+
+        private void MapUser(UserRegistrationDetails details, User user)
+        {
+            user.MobileFor2Factor = details.MobileFor2Factor;
+            user.SecurityAnswer1 = details.SecurityAnswer1;
+            user.SecurityAnswer2 = details.SecurityAnswer2;
+            user.SecurityQuestion1 = details.SecurityQuestion1;
+            user.SecurityQuestion2 = details.SecurityQuestion2;
+            user.PasswordExpiryDate = DateTime.Now.AddDays(14);
+
         }
 
         public Guid ForgotPassword(string username, string securityAnswer1, string securityAnswer2)

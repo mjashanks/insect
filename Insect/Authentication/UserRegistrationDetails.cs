@@ -15,5 +15,23 @@ namespace Insect.Authentication
         public string SecurityAnswer1 { get; set; }
         public string SecurityQuestion2 { get; set; }
         public string SecurityAnswer2 { get; set; }
+
+        public static bool IsValid(UserRegistrationDetails details)
+        {
+            if (details == null) return false;
+            if (Empty(details.Username)) return false;
+            if (Empty(details.Password)) return false;
+            if (Empty(details.MobileFor2Factor)) return false;
+            if (Empty(details.SecurityQuestion1)) return false;
+            if (Empty(details.SecurityAnswer1)) return false;
+            if (Empty(details.SecurityQuestion2)) return false;
+            if (Empty(details.SecurityAnswer2)) return false;
+            return true;
+        }
+
+        private static bool Empty(string val)
+        {
+            return string.IsNullOrWhiteSpace(val);
+        }
     }
 }

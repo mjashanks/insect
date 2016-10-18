@@ -17,7 +17,7 @@ namespace Insect.Authentication
         Guid? Login(string username, string password); //returns sessionid
 
         /// <summary>
-        /// Register a new user
+        /// Registration of an already created user
         /// </summary>
         /// <param name="details">Fields required to create a user record. All fields mandatory</param>
         /// <returns>Success or not</returns>
@@ -64,5 +64,6 @@ namespace Insect.Authentication
         /// <param name="userName"></param>
         /// <returns>successfullness</returns>
         bool ResetAccount(Guid sessionId, string userName);
+
     }
 }
