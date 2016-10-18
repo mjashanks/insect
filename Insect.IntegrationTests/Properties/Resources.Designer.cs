@@ -61,15 +61,8 @@ namespace Insect.IntegrationTests.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to if db_id(&apos;InsectTest&apos;) is not null
-        ///begin
-        ///	drop database InsectTest
-        ///end
-        ///
-        ///create database InsectTest
-        ///
-        ///create table InsectTest.dbo.[Users]
-        ///(Id int identity(0,1) not null,
+        ///   Looks up a localized string similar to create table InsectTest.dbo.[Users]
+        ///(Id int identity(1,1) not null,
         ///Username varchar(max),
         ///Salt varchar(max),
         ///MobileFor2Factor varchar(max),
@@ -83,7 +76,12 @@ namespace Insect.IntegrationTests.Properties {
         ///IsLocked bit)
         ///
         ///create table InsectTest.dbo.[Sessions]
-        /// [rest of string was truncated]&quot;;.
+        ///(
+        ///Id int identity(1,1) not null,
+        ///SessionId uniqueidentifier,
+        ///UserId int,
+        ///ExpiryDate datetime null,
+        ///Lev [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string DropAndCreateDb {
             get {

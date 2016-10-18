@@ -73,13 +73,14 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="DropAndCreateDb.sql" />
+    <Content Include="CreateDbTables.sql" />
     <Content Include="SafeDropTestDb.sql" />
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
   </ItemGroup>
   <Choose>
