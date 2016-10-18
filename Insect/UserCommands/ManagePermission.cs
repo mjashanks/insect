@@ -1,4 +1,5 @@
 ﻿using Insect.Domain;
+using Insect.Stores;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,6 +16,13 @@ namespace Insect.UserCommands
 
     public class ManagePermission : AuthorizedCommandBase<PermissionChange, bool>
     {
+        private IEmployeeStore _employeeStore;
+        public ManagePermission(IEmployeeStore employeeStore)
+        {
+            _employeeStore = employeeStore;
+        }
+
+
         protected override bool Run(PermissionChange req)
         {
             throw new NotImplementedException();
@@ -22,7 +30,7 @@ namespace Insect.UserCommands
 
         protected override bool IsAllowed(User sessionUser, PermissionChange req)
         {
-            return sessionUser.IsAdministrator;
+            return _employeeStore.IsAdmin(sessionUser);
         }
     }
 }

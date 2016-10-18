@@ -13,5 +13,6 @@ namespace Insect.Stores
         bool IsHr(int employeeId);
         bool IAmHr(User me);
         bool IsMe(User me, int employeeId);
+        bool IsAdmin(User me); 
     }
 }
