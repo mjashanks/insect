@@ -17,44 +17,34 @@ namespace Insect.IntegrationTests
         private const string TestDb = "InsectTest";
         private const string TestUser = "mike";
         private const string TestPassword = "CorrectHorseBatteryStaple";
+        private const string TestTwoFactorCode = "two_factor_code";
 
         private AuthenticationService _authService;
-        private User user;
+        private int userId;
         public LoginIntegrationTests()
         {
             DbCreator.Create();
             conn = DbConnectionFactory.CreateAndOpen(DbCreator.TestInstance, TestDb);
-
-            user = new User
-            {
-                IsAdministrator = true,
-                Username = "mike",
-                Salt = "mmmmSalty",
-                PasswordExpiryDate = DateTime.Now.AddDays(14)
-            };
-                        
-            user.Id = (int) conn.Insert(user);
-
-            var hash = new PasswordHash
-            {
-                Hash = PasswordHasher.GenerateSaltedHash(TestPassword, user.Salt),
-                UserId = user.Id
-            };
-
-            conn.Insert(hash);
 
             var config = new Config
             {
                 Database = TestDb,
                 Server = DbCreator.TestInstance
             };
+
+            userId = DbCreator.CreateUser(config, TestUser, TestTwoFactorCode);
+
             var authStore = new AuthStore(config);
             _authService = new AuthenticationService(authStore);
         }
 
         [TestMethod]
-        public void Login___when_details_correct___should_create_session()
+        public void Register_then_login___Should_create_session()
         {
+            var verifySuccess = _authService.Verify(TestUser, TestPassword, TestTwoFactorCode);
+
+            Assert.IsTrue(verifySuccess);
+
             var sessionId = _authService.Login(TestUser, TestPassword);
 
             Assert.IsNotNull(sessionId);
@@ -64,7 +54,7 @@ namespace Insect.IntegrationTests
                               .FirstOrDefault(s => s.SessionId == sessionId);
 
             Assert.IsNotNull(session);
-            Assert.IsTrue(session.UserId == user.Id);
+            Assert.IsTrue(session.UserId == userId);
         }
     }
 }

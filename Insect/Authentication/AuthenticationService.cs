@@ -65,7 +65,7 @@ namespace Insect.Authentication
             _authStore.SaveUser(user);
         }
 
-        public bool Register(string username, string password, string twofactor)
+        public bool Verify(string username, string password, string twofactor)
         {
             if (!IsRegisterValid(username, password, twofactor)) 
                 return false;

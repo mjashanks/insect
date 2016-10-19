@@ -13,7 +13,7 @@ namespace Insect.Authentication
         /// </summary>
         /// <param name="details">Fields required to create a user record. All fields mandatory</param>
         /// <returns>Success or not</returns>
-        bool Register(string username, string password, string twofactor);
+        bool Verify(string username, string password, string twofactor);
 
         /// <summary>
         /// Login. creates session and returns a sessionId

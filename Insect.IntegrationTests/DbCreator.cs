@@ -29,10 +29,10 @@ namespace Insect.IntegrationTests
             connection.Execute(Resources.DropAndCreateDb);
         }
 
-        public static void CreateUser(Config config, string username, string twofactorcode)
+        public static int CreateUser(Config config, string username, string twofactorcode)
         {
             using(var connection = DbConnectionFactory.CreateAndOpen(config.Server, config.Database))
-                connection.Execute("insert into users (username, twofactorcode) values (@username, @twofac)", new { username = username, twofac = twofactorcode });
+                return connection.Execute("insert into users (username, twofactorcode) values (@username, @twofac)", new { username = username, twofac = twofactorcode });
         }
     }
 }

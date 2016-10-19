@@ -34,7 +34,7 @@ namespace Insect.Tests.AuthenticationTests
                 )))
                 .Verifiable();
             
-            var result = _authenticationService.Register(username, password, existingUser.TwoFactorCode);
+            var result = _authenticationService.Verify(username, password, existingUser.TwoFactorCode);
                        
             Assert.IsTrue(result);
             _authStore.Verify();
@@ -65,7 +65,7 @@ namespace Insect.Tests.AuthenticationTests
                 ).Verifiable();
                       
 
-            var result = _authenticationService.Register(username, password, twofactor);
+            var result = _authenticationService.Verify(username, password, twofactor);
 
             Assert.IsTrue(result);
             _authStore.Verify();
@@ -78,7 +78,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.GetUserByName(username))
                       .Returns<User>(null);
 
-            var result = _authenticationService.Register(username, "password", "tf");
+            var result = _authenticationService.Verify(username, "password", "tf");
             Assert.IsFalse(result);
         }
 
@@ -96,7 +96,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.SavePasswordHash(It.IsAny<int>(), It.IsAny<byte[]>()))
                 .Throws(new Exception("should not update password when two factor is incorrect"));
 
-            var result = _authenticationService.Register(username, password, twofactor);
+            var result = _authenticationService.Verify(username, password, twofactor);
 
             Assert.IsFalse(result);
         }
@@ -116,7 +116,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.SaveUser(It.Is<User>(u => u.FailedLoginCount == 1)))
                       .Verifiable();
 
-            var result = _authenticationService.Register(username, password, twofactor);
+            var result = _authenticationService.Verify(username, password, twofactor);
 
             _authStore.Verify();
         }
@@ -136,7 +136,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.SaveUser(It.Is<User>(u => u.IsLocked == true)))
                       .Verifiable();
 
-            var result = _authenticationService.Register(username, password, twofactor);
+            var result = _authenticationService.Verify(username, password, twofactor);
 
             _authStore.Verify();
         }
@@ -156,7 +156,7 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.SavePasswordHash(It.IsAny<int>(), It.IsAny<byte[]>()))
                 .Throws(new Exception("should not update password when account is locked"));
 
-            var result = _authenticationService.Register(username, password, existingUser.TwoFactorCode);
+            var result = _authenticationService.Verify(username, password, existingUser.TwoFactorCode);
 
             Assert.IsFalse(result);
         }
