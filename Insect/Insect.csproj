@@ -56,7 +56,7 @@
     <Compile Include="Domain\Session.cs" />
     <Compile Include="Domain\User.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Authentication\UserRegistrationDetails.cs" />
+    <Compile Include="Authentication\StringExtensions.cs" />
     <Compile Include="Stores\AuthStore.cs" />
     <Compile Include="Stores\IAuthStore.cs" />
     <Compile Include="Stores\IEmployeeStore.cs" />

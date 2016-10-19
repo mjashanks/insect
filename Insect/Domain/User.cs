@@ -14,10 +14,7 @@ namespace Insect.Domain
         public string Username { get; set; }
         public string Salt { get; set; }
         public string MobileFor2Factor { get; set; }
-        public string SecurityQuestion1 { get; set; }
-        public string SecurityAnswer1 { get; set; }
-        public string SecurityQuestion2 { get; set; }
-        public string SecurityAnswer2 { get; set; }
+        public string TwoFactorCode { get; set; }
         public int FailedLoginCount { get; set; }
         public DateTime PasswordExpiryDate { get; set; }
         public bool IsAdministrator { get; set; }

@@ -65,60 +65,56 @@ namespace Insect.Authentication
             _authStore.SaveUser(user);
         }
 
-        public bool Register(UserRegistrationDetails details)
+        public bool Register(string username, string password, string twofactor)
         {
-            if (!UserRegistrationDetails.IsValid(details)) 
+            if (!IsRegisterValid(username, password, twofactor)) 
                 return false;
 
-            var user =_authStore.GetUserByName(details.Username);
+            var user =_authStore.GetUserByName(username);
 
             if (user == null)
                 return false;
 
-            MapUser(details, user);
-            user.Salt = PasswordHasher.GenerateSalt();
+            if (user.IsLocked)
+                return false;
 
+            if (user.TwoFactorCode != twofactor)
+            {
+                IncrementFailCount(user);
+                return false;
+            }
+
+            InitialiseUser(user);
+            user.Salt = PasswordHasher.GenerateSalt();
             _authStore.SaveUser(user);
 
-            var hashedPw = PasswordHasher.GenerateSaltedHash(details.Password, user.Salt);
+            var hashedPw = PasswordHasher.GenerateSaltedHash(password, user.Salt);
             _authStore.SavePasswordHash(user.Id, hashedPw);
 
             return true;
 
         }
 
-        private void MapUser(UserRegistrationDetails details, User user)
+        private bool IsRegisterValid(string username, string password, string twofactor)
         {
-            user.MobileFor2Factor = details.MobileFor2Factor;
-            user.SecurityAnswer1 = details.SecurityAnswer1;
-            user.SecurityAnswer2 = details.SecurityAnswer2;
-            user.SecurityQuestion1 = details.SecurityQuestion1;
-            user.SecurityQuestion2 = details.SecurityQuestion2;
-            user.PasswordExpiryDate = DateTime.Now.AddDays(14);
-
+            return username.NotEmpty() && password.NotEmpty() && twofactor.NotEmpty();
         }
 
-        public Guid ForgotPassword(string username, string securityAnswer1, string securityAnswer2)
+        private void InitialiseUser(User user)
         {
-            throw new NotImplementedException();
+            user.FailedLoginCount = 0;
+            user.IsAdministrator = false;
+            user.IsLocked = false;
+            user.PasswordExpiryDate = DateTime.Now.AddDays(30);
+            user.TwoFactorCode = "";
         }
 
-        public Tuple<string, string> GetSecurityQuestions(string username)
+        public void ForgotPassword(string username)
         {
             throw new NotImplementedException();
         }
 
         public bool ChangePassword(Guid sessionId, string oldPassword, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool TwoFactorVerify(Guid sessionId, string verificationCode, string newPassword)
-        {
-            throw new NotImplementedException();
-        }
-
-        public bool ResetAccount(Guid sessionId, string userName)
         {
             throw new NotImplementedException();
         }

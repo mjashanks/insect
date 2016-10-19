@@ -9,14 +9,14 @@ module Bootstrap =
 
     let Config =
         let mutable config = new Config();
-        config.Database <- "InsectTest"
+        config.Database <- "InsectDemo"
         config.Server <- "localhost\\bluezinc"
         config
 
     let AuthStore = 
         new AuthStore(Config)
 
-    let CreateUser username = 
-        DbCreator.CreateUser(Config, username)
+    let CreateUser username twofactorcode = 
+        DbCreator.CreateUser(Config, username, twofactorcode)
 
 

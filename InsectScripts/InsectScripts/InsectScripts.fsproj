@@ -49,7 +49,7 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <None Include="RegisterUser.fsx" />
+    <None Include="Insect_Authenticate.fsx" />
     <Compile Include="Bootstrap.fs" />
   </ItemGroup>
   <ItemGroup>

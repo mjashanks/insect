@@ -7,9 +7,10 @@ open Insect
 open InsectScripts
 open Bootstrap
 
-CreateUser "mike"
+CreateUser "mike@belfast.com" "my_twofactor_code"
 
 let authService = new AuthenticationService(Bootstrap.AuthStore)
 
-authService.Register()
+authService.Register("mike@belfast.com", "mypassword", "my_twofactor_code" )
 
+authService.Login("mike@belfast.com", "mypassword")
