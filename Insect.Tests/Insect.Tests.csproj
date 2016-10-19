@@ -58,7 +58,7 @@
   <ItemGroup>
     <Compile Include="AuthenticationTests\AuthenticationTestBase.cs" />
     <Compile Include="AuthenticationTests\LoginTests.cs" />
-    <Compile Include="AuthenticationTests\RegisterTests.cs" />
+    <Compile Include="AuthenticationTests\VerifyTests.cs" />
     <Compile Include="TestData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

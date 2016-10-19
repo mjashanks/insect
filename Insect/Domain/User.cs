@@ -19,5 +19,6 @@ namespace Insect.Domain
         public DateTime PasswordExpiryDate { get; set; }
         public bool IsAdministrator { get; set; }
         public bool IsLocked { get; set; }
+        public bool IsVerified { get; set; }
     }
 }

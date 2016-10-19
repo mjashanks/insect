@@ -32,7 +32,7 @@ namespace Insect.IntegrationTests
         public static int CreateUser(Config config, string username, string twofactorcode)
         {
             using(var connection = DbConnectionFactory.CreateAndOpen(config.Server, config.Database))
-                return connection.Execute("insert into users (username, twofactorcode) values (@username, @twofac)", new { username = username, twofac = twofactorcode });
+                return connection.Execute("insert into users (username, twofactorcode, isverified) values (@username, @twofac, 0)", new { username = username, twofac = twofactorcode });
         }
     }
 }

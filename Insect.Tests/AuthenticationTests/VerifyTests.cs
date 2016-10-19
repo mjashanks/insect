@@ -13,10 +13,10 @@ namespace Insect.Tests.AuthenticationTests
 {
 
     [TestClass]
-    public class RegisterTests : AuthenticationTestBase
+    public class VerifyTests : AuthenticationTestBase
     {
         [TestMethod]
-        public void Register___when_valid___should_update_user_with_initial_details()
+        public void Verify___when_valid___should_update_user_with_initial_details()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -41,7 +41,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_valid___should_store_hashed_password_and_generate_salt()
+        public void Verify___when_valid___should_store_hashed_password_and_generate_salt()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -72,7 +72,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_username_not_exists___should_return_false()
+        public void Verify___when_username_not_exists___should_return_false()
         {
             var username = "non_existent_user";
             _authStore.Setup(a => a.GetUserByName(username))
@@ -83,7 +83,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_twofactor_code_incorrect___should_return_false_and_not_set_password()
+        public void Verify___when_twofactor_code_incorrect___should_return_false_and_not_set_password()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -102,7 +102,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_twofactor_code_incorrect___should_increment_failedcount()
+        public void Verify___when_twofactor_code_incorrect___should_increment_failedcount()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -122,7 +122,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_twofactor_code_incorrect_for_third_time___should_lock_user()
+        public void Verify___when_twofactor_code_incorrect_for_third_time___should_lock_user()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -142,7 +142,7 @@ namespace Insect.Tests.AuthenticationTests
         }
 
         [TestMethod]
-        public void Register___when_user_account_locked___should_return_false_and_not_set_password()
+        public void Verify___when_user_account_locked___should_return_false_and_not_set_password()
         {
             var existingUser = TestData.User();
             var username = existingUser.Username;
@@ -156,9 +156,28 @@ namespace Insect.Tests.AuthenticationTests
             _authStore.Setup(a => a.SavePasswordHash(It.IsAny<int>(), It.IsAny<byte[]>()))
                 .Throws(new Exception("should not update password when account is locked"));
 
-            var result = _authenticationService.Verify(username, password, existingUser.TwoFactorCode);
+            var result = _authenticationService.Verify(username, password, twofactor);
 
             Assert.IsFalse(result);
         }
+
+        [TestMethod]
+        public void Verify___when_user_already_verified___should_return_false_and_not_set_password()
+        {
+            var existingUser = TestData.User();
+            var username = existingUser.Username;
+            existingUser.IsVerified = true;
+            existingUser.TwoFactorCode = "twofactor";
+            _authStore.Setup(a => a.GetUserByName(username))
+                      .Returns(existingUser);
+
+            _authStore.Setup(a => a.SavePasswordHash(It.IsAny<int>(), It.IsAny<byte[]>()))
+                .Throws(new Exception("should not update password when account is already verified"));
+
+            var result = _authenticationService.Verify(username, "whatever", existingUser.TwoFactorCode);
+
+            Assert.IsFalse(result);
+        }
+
     }
 }

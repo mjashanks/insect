@@ -72,10 +72,7 @@ namespace Insect.Authentication
 
             var user =_authStore.GetUserByName(username);
 
-            if (user == null)
-                return false;
-
-            if (user.IsLocked)
+            if (user == null || user.IsLocked || user.IsVerified)
                 return false;
 
             if (user.TwoFactorCode != twofactor)
