@@ -7,6 +7,7 @@ using Dapper;
 using Dapper.Contrib;
 using Insect.IntegrationTests.Properties;
 using Insect.Domain;
+using System.Data;
 
 namespace Insect.IntegrationTests
 {
@@ -26,6 +27,12 @@ namespace Insect.IntegrationTests
             connection.Execute("Create database InsectTest");
 
             connection.Execute(Resources.DropAndCreateDb);
+        }
+
+        public static void CreateUser(Config config, string username)
+        {
+            using(var connection = DbConnectionFactory.CreateAndOpen(config.Server, config.Database))
+                connection.Execute("insert into users (username) values (@username)", new { username = username });
         }
     }
 }
