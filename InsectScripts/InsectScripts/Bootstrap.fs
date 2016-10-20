@@ -16,7 +16,7 @@ module Bootstrap =
     let AuthStore = 
         new AuthStore(Config)
 
-    let CreateUser username twofactorcode = 
-        DbCreator.CreateUser(Config, username, twofactorcode)
+    let CreateUser username twofactorcode verifyPath = 
+        DbCreator.CreateUser(Config, username, twofactorcode, verifyPath)
 
 

@@ -10,6 +10,7 @@ namespace Insect.Stores
     public interface IAuthStore
     {
         User GetUserByName(string username);
+        User GetUserByEmailVerificationPath(string emailVerify);
         User GetUser(int id);
         Session GetSession(Guid id);
         byte[] GetPasswordHash(int userid);

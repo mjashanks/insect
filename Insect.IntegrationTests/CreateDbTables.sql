@@ -7,6 +7,8 @@ TwoFactorCode varchar(max),
 FailedLoginCount int,
 PasswordExpiryDate datetime null,
 IsAdministrator bit,
+EmailVerificationPath varchar(max),
+VerificationExpiryDate datetime null,
 IsLocked bit,
 IsVerified bit)
 

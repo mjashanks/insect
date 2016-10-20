@@ -29,10 +29,15 @@ namespace Insect.IntegrationTests
             connection.Execute(Resources.DropAndCreateDb);
         }
 
-        public static int CreateUser(Config config, string username, string twofactorcode)
+        public static int CreateUser(Config config, string username, string twofactorcode, string emailVerificationPath)
         {
             using(var connection = DbConnectionFactory.CreateAndOpen(config.Server, config.Database))
-                return connection.Execute("insert into users (username, twofactorcode, isverified) values (@username, @twofac, 0)", new { username = username, twofac = twofactorcode });
+                return connection.Execute("insert into users (username, twofactorcode, isverified, VerificationExpiryDate, EmailVerificationPath) values (@username, @twofac, 0, @verifyDate, @verifyPath)",
+                        new { 
+                            username = username, 
+                            twofac = twofactorcode, 
+                            verifyDate = DateTime.Now.AddDays(1),
+                            verifyPath = emailVerificationPath});
         }
     }
 }

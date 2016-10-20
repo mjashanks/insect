@@ -15,10 +15,12 @@ namespace Insect.Domain
         public string Salt { get; set; }
         public string MobileFor2Factor { get; set; }
         public string TwoFactorCode { get; set; }
+        public string EmailVerificationPath { get; set; }
         public int FailedLoginCount { get; set; }
         public DateTime PasswordExpiryDate { get; set; }
         public bool IsAdministrator { get; set; }
         public bool IsLocked { get; set; }
         public bool IsVerified { get; set; }
+        public DateTime VerificationExpiryDate { get; set; }
     }
 }

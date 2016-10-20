@@ -19,8 +19,10 @@ TwoFactorCode varchar(max),
 FailedLoginCount int,
 PasswordExpiryDate datetime null,
 IsAdministrator bit,
+EmailVerificationPath varchar(max),
 IsLocked bit,
-IsVerified bit)
+IsVerified bit,
+VerificationExpiryDate datetime null)
 
 create table InsectDemo.dbo.[Sessions]
 (

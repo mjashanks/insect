@@ -8,8 +8,8 @@ open InsectScripts
 open Bootstrap
 let authService = new AuthenticationService(Bootstrap.AuthStore)
 
-CreateUser "mike@belfast.com" "my_twofactor_code"
+CreateUser "mike2@belfast.com" "my_twofactor_code" "/verify/12367"
 
-authService.Verify("mike@belfast.com", "mypassword", "my_twofactor_code" )
+authService.Verify("/verify/12367", "mypassword", "my_twofactor_code" )
 
-authService.Login("mike@belfast.com", "mypassword")
+authService.Login("mike2@belfast.com", "mypassword")

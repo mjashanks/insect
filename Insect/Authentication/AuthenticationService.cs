@@ -65,15 +65,20 @@ namespace Insect.Authentication
             _authStore.SaveUser(user);
         }
 
-        public bool Verify(string username, string password, string twofactor)
+        public bool Verify(string emailVerify, string password, string twofactor)
         {
-            if (!IsRegisterValid(username, password, twofactor)) 
+            if (!IsRegisterValid(emailVerify, password, twofactor)) 
                 return false;
 
-            var user =_authStore.GetUserByName(username);
+            var user =_authStore.GetUserByEmailVerificationPath(emailVerify);
 
-            if (user == null || user.IsLocked || user.IsVerified)
+            if (user == null
+                || user.IsLocked
+                || user.IsVerified
+                || user.VerificationExpiryDate < DateTime.Now)
+            {
                 return false;
+            }
 
             if (user.TwoFactorCode != twofactor)
             {

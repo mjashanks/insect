@@ -25,6 +25,12 @@ namespace Insect.Stores
                       .FirstOrDefault(u => u.Username == username);
         }
 
+        public User GetUserByEmailVerificationPath(string emailVerify)
+        {
+            return conn.GetAll<User>()
+                      .FirstOrDefault(u => u.EmailVerificationPath == emailVerify);
+        }
+
         public Domain.User GetUser(int id)
         {
             return conn.Get<User>(id);

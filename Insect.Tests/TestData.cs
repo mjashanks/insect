@@ -19,7 +19,9 @@ namespace Insect.Tests
                 MobileFor2Factor = "07777388737",
                 PasswordExpiryDate = DateTime.Now.AddDays(1),
                 IsAdministrator = true,
-                TwoFactorCode = "9938847"
+                TwoFactorCode = "9938847",
+                VerificationExpiryDate = DateTime.Now.AddDays(1),
+                EmailVerificationPath = "unique_email_verify_url"
             };
         }
     }

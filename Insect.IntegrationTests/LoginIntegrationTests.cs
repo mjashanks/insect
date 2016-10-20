@@ -18,6 +18,7 @@ namespace Insect.IntegrationTests
         private const string TestUser = "mike";
         private const string TestPassword = "CorrectHorseBatteryStaple";
         private const string TestTwoFactorCode = "two_factor_code";
+        private const string TestVerificationPath = "askmdmdmdka099290101";
 
         private AuthenticationService _authService;
         private int userId;
@@ -32,7 +33,7 @@ namespace Insect.IntegrationTests
                 Server = DbCreator.TestInstance
             };
 
-            userId = DbCreator.CreateUser(config, TestUser, TestTwoFactorCode);
+            userId = DbCreator.CreateUser(config, TestUser, TestTwoFactorCode, TestVerificationPath);
 
             var authStore = new AuthStore(config);
             _authService = new AuthenticationService(authStore);
@@ -41,7 +42,7 @@ namespace Insect.IntegrationTests
         [TestMethod]
         public void Register_then_login___Should_create_session()
         {
-            var verifySuccess = _authService.Verify(TestUser, TestPassword, TestTwoFactorCode);
+            var verifySuccess = _authService.Verify(TestVerificationPath, TestPassword, TestTwoFactorCode);
 
             Assert.IsTrue(verifySuccess);
 
